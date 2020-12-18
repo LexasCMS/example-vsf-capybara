@@ -20,6 +20,7 @@
     "supports-webp": "^2.0.1",
     "vue": "^2.6.11",
     "vue-lazy-hydration": "^1.0.0-beta.9",
+    "vue-markdown": "^2.2.4",
     "vue-no-ssr": "^0.2.2",
     "vue-offline": "^1.0.8",
     "vue-progressbar": "^0.7.5",

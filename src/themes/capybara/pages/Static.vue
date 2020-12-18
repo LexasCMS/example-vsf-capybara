@@ -16,7 +16,10 @@
       @click:change="updateRoute"
     >
       <SfContentPage v-for="n in navigation" :key="n.title" :title="n.title">
-        <AStatic :content="content" />
+        <TextPage
+          :filter="{ slug: { _eq: n.link.slice(1) } }"
+          :page="{ limit: 1 }"
+        />
       </SfContentPage>
     </SfContentPages>
   </div>
@@ -31,21 +34,20 @@ import {
 } from '@storefront-ui/vue';
 import { getPathForStaticPage } from 'theme/helpers';
 import CmsPage from '@vue-storefront/core/pages/CmsPage';
-import AStatic from 'theme/components/atoms/a-static';
+import TextPage from 'theme/components/text-page';
 
 export default {
   name: 'Static',
   components: {
     SfBreadcrumbs,
     SfContentPages,
-    AStatic
+    TextPage
   },
   mixins: [CmsPage],
   data () {
     return {
       navigation: [
-        { title: i18n.t('About us (Magento CMS)'), link: getPathForStaticPage('/about-us'), isCms: true },
-        { title: i18n.t('Customer service (Magento CMS)'), link: getPathForStaticPage('/customer-service'), isCms: true },
+        { title: i18n.t('About us'), link: '/about-us' },
         { title: i18n.t('Customer service'), link: '/customer-service' },
         { title: i18n.t('Legal notice'), link: '/legal' },
         { title: i18n.t('Store locator'), link: '/store-locator' },
@@ -58,9 +60,6 @@ export default {
     };
   },
   computed: {
-    ...mapGetters({
-      defaultContent: 'defaultContent/getDefaultContent'
-    }),
     breadcrumbs () {
       return [
         { text: i18n.t('Homepage'), route: { link: this.localizedRoute('/') } },
@@ -100,11 +99,6 @@ export default {
         }
       }
     }
-  },
-  async mounted () {
-    await Promise.all([
-      this.$store.dispatch('defaultContent/updateDefaultContent')
-    ])
   }
 };
 </script>

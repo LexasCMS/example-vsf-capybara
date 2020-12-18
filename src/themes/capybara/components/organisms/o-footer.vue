@@ -128,11 +128,11 @@ export default {
           children: [
             {
               name: 'About us',
-              link: getPathForStaticPage('/about-us')
+              link: '/about-us'
             },
             {
               name: 'Customer service',
-              link: getPathForStaticPage('/customer-service')
+              link: '/customer-service'
             },
             { name: 'Store locator', link: '/store-locator' }
           ]

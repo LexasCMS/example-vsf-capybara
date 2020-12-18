@@ -1,115 +1,52 @@
 <template>
   <div id="home">
-    <SfHero
-      class="hero"
-      :slider-options="{
-        animationDuration: 2000,
-        rewindDuration: 2000
+    <ContentPage
+      :filter="{
+        slug: {
+          _eq: 'homepage'
+        }
       }"
-    >
-      <SfHeroItem
-        v-for="(hero, i) in heroes"
-        :key="i"
-        :title="hero.title"
-        :subtitle="hero.subtitle"
-        :button-text="hero.buttonText"
-        :background="hero.background"
-        :image="hero.image"
-        :class="hero.className"
-      />
-    </SfHero>
-
-    <SfBannerGrid :banner-grid="1" class="banner-grid">
-      <template v-for="(banner, i) in banners" #[banner.slot]>
-        <router-link :key="i" :to="banner.link">
-          <SfBanner
-            :subtitle="banner.subtitle"
-            :title="banner.title"
-            :description="banner.description"
-            :button-text="banner.buttonText"
-            :image="banner.image"
-          />
-        </router-link>
-      </template>
-    </SfBannerGrid>
-
-    <ONewsletter />
-
-    <SfSection :title-heading="$t('Bestsellers')" class="section">
-      <lazy-hydrate :trigger-hydration="!loading">
-        <m-product-carousel :products="newCollection" />
-      </lazy-hydrate>
-    </SfSection>
-
-    <SfSection
-      v-if="isOnline"
-      :title-heading="$t('Share Your Look')"
-      subtitle-heading="#YOURLOOK"
-      class="section"
-    >
-      <AImagesGrid :images="instagramImages" />
-    </SfSection>
+      :page="{
+        limit: 1,
+        sections: {
+          limit: 5,
+          bannerItems: {
+            limit: 5
+          },
+          featuredCategories: {
+            limit: 4
+          }
+        }
+      }"
+      :include="include"
+    />
   </div>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex';
-import LazyHydrate from 'vue-lazy-hydration';
+import { mapGetters } from 'vuex';
 import { Logger } from '@vue-storefront/core/lib/logger';
-import { isServer, onlineHelper } from '@vue-storefront/core/helpers';
-import MProductCarousel from 'theme/components/molecules/m-product-carousel';
-import ONewsletter from 'theme/components/organisms/o-newsletter';
-import AImagesGrid from 'theme/components/atoms/a-images-grid';
-import { checkWebpSupport } from 'theme/helpers'
-
-import {
-  SfHero,
-  SfSection,
-  SfBannerGrid,
-  SfBanner
-} from '@storefront-ui/vue';
+import { isServer } from '@vue-storefront/core/helpers';
+import ContentPage from 'theme/components/content-page';
 
 export default {
   name: 'Home',
   components: {
-    LazyHydrate,
-    SfHero,
-    SfSection,
-    SfBannerGrid,
-    SfBanner,
-    MProductCarousel,
-    ONewsletter,
-    AImagesGrid
+    ContentPage
   },
   data () {
     return {
-      loading: true,
+      include: 'sections,' + // Content Page Sections
+               'sections.bannerItems,sections.bannerItems.backgroundImage,' + // Promo Banner Items
+               'sections.featuredCategories,sections.featuredCategories.backgroundImage,' + // Featured Categories
+               'sections.backgroundImage', // Newsletter Signup
       loadNewsletterPopup: false
     };
   },
   computed: {
-    ...mapState({
-      isWebpSupported: state => state.ui.isWebpSupported
-    }),
     ...mapGetters({
-      isLoggedIn: 'user/isLoggedIn',
-      heroImages: 'promoted/getHeadImage',
-      promotedOffers: 'promoted/getPromotedOffers',
-      newCollection: 'homepage/getEverythingNewCollection',
-      dummyInstagramImages: 'instagram/getInstagramImages'
-    }),
-    isOnline () {
-      return onlineHelper.isOnline;
-    },
-    banners () {
-      return checkWebpSupport(this.promotedOffers.mainBanners, this.isWebpSupported)
-    },
-    heroes () {
-      return checkWebpSupport(this.heroImages, this.isWebpSupported)
-    },
-    instagramImages () {
-      return checkWebpSupport(this.dummyInstagramImages, this.isWebpSupported)
-    }
+      isLoggedIn: 'user/isLoggedIn'
+    })
   },
   watch: {
     isLoggedIn () {
@@ -166,12 +103,6 @@ export default {
 .sf-hero-item {
   --hero-item-height: 14rem;
   height: initial;
-}
-.banner-grid {
-  margin: var(--spacer-base) 0;
-  @include for-desktop {
-    margin: var(--spacer-2xl) 0;
-  }
 }
 .section {
   @include for-desktop {

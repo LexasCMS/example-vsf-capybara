@@ -7,19 +7,21 @@
     </SfTabs>
     <div v-else class="content">
       <SfHeading :level="1" :title="content.title" />
-      <div v-html="content.message" />
+      <VueMarkdown>{{ content.message }}</VueMarkdown>
     </div>
   </div>
 </template>
 
 <script>
 import { SfTabs, SfHeading } from '@storefront-ui/vue';
+import VueMarkdown from 'vue-markdown';
 
 export default {
   name: 'AStatic',
   components: {
     SfTabs,
-    SfHeading
+    SfHeading,
+    VueMarkdown
   },
   props: {
     content: {

@@ -1,4 +1,7 @@
 {
+  "lexascms": {
+    "spaceId": "LEXASCMS_SPACE_ID"
+  },
   "server": {
     "host": "BIND_HOST",
     "port": "BIND_PORT"
