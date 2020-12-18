@@ -1,0 +1,32 @@
+FROM node:12-alpine
+
+WORKDIR /var/www
+
+RUN apk add --no-cache --virtual .build-deps ca-certificates wget python make g++ \
+  && apk add --no-cache git \
+  && yarn install --no-cache \
+  && apk del .build-deps
+
+COPY package.json ./
+COPY yarn.lock ./
+
+COPY ./src ./src
+COPY ./babel.config.js ./
+COPY ./config ./config
+COPY ./core ./core
+COPY ./ecosystem.json ./
+COPY ./.eslintignore ./
+COPY ./.eslintrc.js ./
+# COPY ./lerna.json ./
+COPY ./tsconfig.json ./
+COPY ./tsconfig-build.json ./
+COPY ./shims.d.ts ./
+COPY ./package.json ./
+# COPY ./packages ./packages
+
+ENV NODE_ENV=production
+
+RUN yarn install --production=false
+RUN yarn build
+
+CMD yarn run ts-node -P tsconfig-build.json ./core/scripts/server.ts
