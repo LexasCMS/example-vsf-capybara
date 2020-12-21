@@ -1,5 +1,13 @@
 <template>
   <div id="app">
+    <div id="example-app-banner">
+      <span>
+        This is an e-commerce store example built with
+        <a href="https://www.lexascms.com" target="_blank">LexasCMS</a> and
+        <a href="https://www.vuestorefront.io/" target="_blank">Vue Storefront 1.x</a> -
+        <a href="https://github.com/lexascms/example-vsf-capybara/" target="_blank">View source code</a>
+      </span>
+    </div>
     <component :is="layout">
       <router-view />
     </component>
@@ -43,6 +51,21 @@ body {
     &:hover {
       color: var(--c-link-hover);
     }
+  }
+}
+
+#example-app-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a202c;
+  color: #e2e8f0;
+  font-size: 14px;
+  padding: 14px 16px;
+
+  a {
+    color: inherit;
+    text-decoration: underline;
   }
 }
 
