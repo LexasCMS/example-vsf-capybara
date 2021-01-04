@@ -3,7 +3,7 @@
     <div id="example-app-banner">
       <span>
         This is an e-commerce store example built with
-        <a href="https://www.lexascms.com" target="_blank">LexasCMS</a> and
+        <a href="https://www.lexascms.com/vue-storefront/" target="_blank">LexasCMS</a> and
         <a href="https://www.vuestorefront.io/" target="_blank">Vue Storefront 1.x</a> -
         <a href="https://github.com/lexascms/example-vsf-capybara/" target="_blank">View source code</a>
       </span>
