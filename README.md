@@ -19,4 +19,4 @@ If you would like to have a play around with this demo, you can deploy it to you
 3. From within your space, navigate to **Settings > General** and copy your space's ID
 4. Click the below button and follow the instructions
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/LexasCMS/example-vsf-capybara)
